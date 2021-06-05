@@ -1,0 +1,101 @@
+﻿@using ShoppingCartCorePractice.Migrations;
+@model IEnumerable<Categories>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<br />
+<br />
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Product Type List</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp; 新增產品類別</a>
+    </div>
+</div>
+<br />
+<div>
+    @*<table class="table table-striped border">
+            <tr class="table-info">
+                <th>
+                    分類名稱
+                </th>
+                <th>功能</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td style="width: 150px">
+                        <div class="btn-group">
+                            <button data-uid="@item.Id" class="fn-edit btn btn-primary"><i class="far fa-edit"></i></button>
+                            <button data-uid="@item.Id" class="fn-delete btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>*@
+    <table class="table table-striped border" id="app">
+        <tr class="table-info">
+            <th>
+                分類名稱
+            </th>
+            <th>功能</th>
+        </tr>
+        <tr v-for="(item , index) in list" :key="item.id">
+            <td>
+               {{item.name}}          
+            </td>
+            <td style="width: 150px">
+                <div class="btn-group">
+                    <button  v-on:click="Edit(item.id)" class="fn-edit btn btn-primary"><i class="far fa-edit"></i></button>
+                    <button  v-on:click="Delete(item.id)"class="fn-delete btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+@*<script>
+        $('.fn-edit').on('click', function () {
+             var uid = $(this).attr('data-uid');
+             window.location = '@Url.Content("~/Admin/ProductType/Edit/")' + uid;
+        });
+        $('.fn-delete').on('click', function () {
+             var uid = $(this).attr('data-uid');
+             window.location = '@Url.Content("~/Admin/ProductType/Delete/")' + uid;
+        });
+    </script>*@
+
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                list: [],
+            }
+        },
+        mounted() {
+            axios
+                .get('https://localhost:44379/Admin/ProductTypeApi/Index')
+                .then(response => (this.list = response.data))
+                .catch(function (error) { 
+                    console.log(error);
+                });
+        },
+        methods: {
+            Edit(id) {
+                 window.location = '@Url.Content("~/ProductType/Edit/")' + id;
+            },
+            Delete(id) {
+                 window.location = '@Url.Content("~/ProductType/Delete/")' + id;
+            }
+        }
+    }).mount('#app')
+
+
+</script>
