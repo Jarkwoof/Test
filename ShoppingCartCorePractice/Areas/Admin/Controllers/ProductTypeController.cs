@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ShoppingCartCorePractice.Areas.Admin.Interface;
 using ShoppingCartCorePractice.Migrations;
 using ShoppingCartCorePractice.Models;
 using System;
@@ -14,16 +15,17 @@ namespace ShoppingCartCorePractice.Controllers
     [Area("Admin")]
     public class ProductTypeController : Controller
     {
-        private ApplicationDbContext _db;
-        public ProductTypeController(ApplicationDbContext db)
+      
+        private readonly IAdminService<Categories> _AdminService;
+        public ProductTypeController(IAdminService<Categories> AdminService)
         {
-            _db = db;
+            _AdminService = AdminService;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            var list = _db.Categories.ToList();
+            var list = _AdminService.GetAll();
             return View(list);
         }
 
@@ -32,61 +34,59 @@ namespace ShoppingCartCorePractice.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Categories categories)
+        public ActionResult Create(Categories categories)
         {
-            if (ModelState.IsValid)
+            var CreateData = _AdminService.Create(categories);
+
+            if (CreateData == true)
             {
-                _db.Categories.Add(categories);
-                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(categories);
+            else
+            {
+                return View(CreateData);
+            }
         }
+
+
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            var EditData = _AdminService.GetById(id);
+            if(EditData == null)
             {
-                return NotFound();
+               return NotFound();
             }
-
-            var Categories = _db.Categories.Find(id);
-            if (Categories == null)
-            {
-                return NotFound();
-            }
-            return View(Categories);
+            return View(EditData);
         }
 
-        public async Task<IActionResult> Update(Categories categories)
+        public ActionResult Update(Categories categories)
         {
-            if (ModelState.IsValid)
+            var result = _AdminService.Update(categories);
+            if(result == true)
             {
-                _db.Update(categories);
-                await _db.SaveChangesAsync();          
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
-
-            return View(categories);
+            else
+            {
+                return View(categories);
+            }
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            Categories categories = _db.Categories.Find(id);
-            if (categories == null)
+            var DeleteData = _AdminService.Delete(id);
+            if(DeleteData == true)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
-            if (ModelState.IsValid)
+            else
             {
-                _db.Remove(categories);
-                await _db.SaveChangesAsync();              
-                return RedirectToAction(nameof(Index));
+                return View(DeleteData);
             }
-            return View(categories);
         }
     }
 }

@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShoppingCartCorePractice.Areas.Admin.Interface;
+using ShoppingCartCorePractice.Areas.Admin.Service;
 using ShoppingCartCorePractice.Migrations;
 using System;
 using System.Collections.Generic;
@@ -29,7 +32,8 @@ namespace ShoppingCartCorePractice
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(
                      Configuration.GetConnectionString("DevConnection")));
-            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddMvc(option => option.EnableEndpointRouting = false);       
+            services.AddTransient<IAdminService<Categories>, AdminService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
