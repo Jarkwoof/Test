@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ShoppingCartCorePractice.Areas.Admin.Service
 {
-    public class AdminService : IAdminService<Categories>
+    public class CategoriesService : IAdminService<Categories>
     {
         private readonly ApplicationDbContext _context;
 
-        public AdminService(ApplicationDbContext context)
+        public CategoriesService(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -26,10 +26,10 @@ namespace ShoppingCartCorePractice.Areas.Admin.Service
             {
                 return false;
             }
-            var dbData = (_context.Categories.Where(x => x.Name == _object.Name)).FirstOrDefault();
+            var dbData = (_context.Categories.Where(x => x.Id == _object.Id)).FirstOrDefault();
             if (dbData == null)
             {
-                _context.Categories.AddAsync(_object);
+                _context.Categories.Add(_object);
                 _context.SaveChanges();
                 return true;
             }
@@ -73,9 +73,9 @@ namespace ShoppingCartCorePractice.Areas.Admin.Service
                 return false;
             }
         }
-        public Categories GetById(int? id)
+        public Categories GetById(int? Id)
         {
-            var data = _context.Categories.Where(x => x.Id == id).FirstOrDefault();
+            var data = _context.Categories.Where(x => x.Id == Id).FirstOrDefault();
             if (data == null)
             {
                 return null;

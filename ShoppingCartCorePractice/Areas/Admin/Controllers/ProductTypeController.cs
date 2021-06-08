@@ -44,7 +44,7 @@ namespace ShoppingCartCorePractice.Controllers
             }
             else
             {
-                return View(CreateData);
+                return View("Create",CreateData);
             }
         }
 
@@ -68,7 +68,7 @@ namespace ShoppingCartCorePractice.Controllers
             }
             else
             {
-                return View(categories);
+                return View("Update", categories);
             }
         }
 
@@ -78,15 +78,9 @@ namespace ShoppingCartCorePractice.Controllers
             {
                 return NotFound();
             }
-            var DeleteData = _AdminService.Delete(id);
-            if(DeleteData == true)
-            {
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View(DeleteData);
-            }
+            var DeleteData = _AdminService.Delete(id);              
+            return RedirectToAction("Index");
+                      
         }
     }
 }

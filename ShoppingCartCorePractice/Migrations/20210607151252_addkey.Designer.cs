@@ -10,8 +10,8 @@ using ShoppingCartCorePractice.Migrations;
 namespace ShoppingCartCorePractice.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210601125808_addtable")]
-    partial class addtable
+    [Migration("20210607151252_addkey")]
+    partial class addkey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -109,10 +109,7 @@ namespace ShoppingCartCorePractice.Migrations
 
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<int?>("CategoriesId")
-                        .HasColumnType("int");
-
+              
                     b.Property<int>("Category_Id")
                         .HasColumnType("int");
 
@@ -137,9 +134,7 @@ namespace ShoppingCartCorePractice.Migrations
                     b.Property<string>("Publisher")
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoriesId");
+                    b.HasKey("Id");                 
 
                     b.ToTable("Products");
                 });

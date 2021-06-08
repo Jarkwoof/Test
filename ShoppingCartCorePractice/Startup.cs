@@ -33,7 +33,8 @@ namespace ShoppingCartCorePractice
                  options.UseSqlServer(
                      Configuration.GetConnectionString("DevConnection")));
             services.AddMvc(option => option.EnableEndpointRouting = false);       
-            services.AddTransient<IAdminService<Categories>, AdminService>();
+            services.AddTransient<IAdminService<Categories>, CategoriesService>();
+            services.AddTransient<IproductService, ProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +62,7 @@ namespace ShoppingCartCorePractice
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{area=Admin}/{controller=ProductType}/{action=Index}/{id?}"
+                    pattern: "{area=Admin}/{controller=Product}/{action=Index}/{id?}"
                 );
             });
             //app.UseMvc(routes =>

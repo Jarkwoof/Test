@@ -1,0 +1,46 @@
+﻿@using ShoppingCartCorePractice.Areas.Admin.Models
+@model ShoppingCartCorePractice.Areas.Admin.Models.ProductViewModel
+
+@*@{
+    ViewData["Title"] = "Index";
+}*@
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">產品列表</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp; 新增產品</a>      
+    </div>
+</div>
+<br />
+<table class="table table-striped border">
+    <tr class="table-info">
+        <th>產品名稱</th>
+        <th>價格</th>
+        <th>是否上架</th>
+        <th>分類名稱</th>
+        <th>功能</th>
+    </tr>
+    @foreach (ProductDto item in Model.ProductList)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>
+                @if (item.IsPublic == true)
+                {<p>是</p> }
+                else
+                { <p>否</p>}
+            </td>
+            <td>@item.CategoriesName</td>
+            <td style="width: 150px">
+                <div class="btn-group">
+                    <button data-uid="@item.Id" class="fn-edit btn btn-primary"><i class="far fa-edit"></i></button>
+                    <button data-uid="@item.Id" class="fn-delete btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
