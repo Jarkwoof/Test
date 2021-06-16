@@ -84,12 +84,12 @@ namespace ShoppingCartCorePractice.Areas.Admin.Controllers
         {
             var result = _Productsvc.Update(product);
             if (result == true)
-            {
+            {              
                 return RedirectToAction("Index");
             }
             else
             {
-                ViewBag.Category_Id = new SelectList(_CategoriesService.GetAll().ToList(), "Id", "Name");
+                ViewBag.Category_Id = new SelectList(_CategoriesService.GetAll().ToList(), "Id", "Name");             
                 return View("Edit", product);
             }
         }
