@@ -1,16 +1,15 @@
 ﻿@using ShoppingCartCorePractice.Areas.Admin.Models
 @model ShoppingCartCorePractice.Areas.Admin.Models.ProductViewModel
-
 @*@{
-    ViewData["Title"] = "Index";
-}*@
+        ViewData["Title"] = "Index";
+    }*@
 
 <div class="row">
     <div class="col-6">
         <h2 class="text-info">產品列表</h2>
     </div>
     <div class="col-6 text-right">
-        <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp; 新增產品</a>      
+        <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp; 新增產品</a>
     </div>
 </div>
 <br />
@@ -43,4 +42,15 @@
         </tr>
     }
 </table>
+
+<script>
+        $('.fn-edit').on('click', function () {
+             var uid = $(this).attr('data-uid');
+             window.location = '@Url.Content("~/Admin/Product/Edit/")' + uid;
+        });
+        $('.fn-delete').on('click', function () {
+             var uid = $(this).attr('data-uid');
+             window.location = '@Url.Content("~/Admin/Product/Delete/")' + uid;
+        });
+</script>
 

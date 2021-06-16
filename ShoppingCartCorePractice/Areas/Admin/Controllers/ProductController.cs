@@ -68,5 +68,40 @@ namespace ShoppingCartCorePractice.Areas.Admin.Controllers
                 return View("Create", Products);
             }
         }
+
+        public ActionResult Edit(int? id)
+        {
+            var EditData = _Productsvc.GetById(id);
+            ViewBag.Category_Id = new SelectList(_CategoriesService.GetAll().ToList(), "Id", "Name");
+            if (EditData == null)
+            {
+                return NotFound();
+            }
+            return View(EditData);
+        }
+
+        public ActionResult Update(Products product)
+        {
+            var result = _Productsvc.Update(product);
+            if (result == true)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("Update", product);
+            }
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var DeleteData = _Productsvc.Delete(id);
+            return RedirectToAction("Index");
+
+        }
     }
 }

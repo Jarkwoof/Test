@@ -25,16 +25,11 @@ namespace ShoppingCartCorePractice.Areas.Admin.Service
             var dbData = (_context.Products.Where(x => x.Id == _object.Id)).FirstOrDefault();
             if (dbData == null)
             {
-                try
-                {
-                    _context.Products.Add(_object);
-                    _context.SaveChanges();
-                }
-                catch (Exception)
-                {
-                  
-                }
-               
+
+                _context.Products.Add(_object);
+                _context.SaveChanges();
+
+
                 return true;
             }
             else
@@ -101,13 +96,14 @@ namespace ShoppingCartCorePractice.Areas.Admin.Service
             var query = (from x in _context.Products
                          join y in _context.Categories
                          on x.Category_Id equals y.Id
-                         select new ProductDto 
-                         { 
-                            Name =x.Name,
-                            Price =x.Price,
-                            IsPublic =x.IsPublic,
-                            CategoriesName =y.Name,
-                            
+                         select new ProductDto
+                         {
+                             Name = x.Name,
+                             Price = x.Price,
+                             IsPublic = x.IsPublic,
+                             CategoriesName = y.Name,
+                             Id = x.Id
+
                          }).ToList<ProductDto>();
 
             return query;
