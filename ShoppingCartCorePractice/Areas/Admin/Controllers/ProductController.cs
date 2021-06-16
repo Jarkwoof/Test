@@ -89,7 +89,8 @@ namespace ShoppingCartCorePractice.Areas.Admin.Controllers
             }
             else
             {
-                return View("Update", product);
+                ViewBag.Category_Id = new SelectList(_CategoriesService.GetAll().ToList(), "Id", "Name");
+                return View("Edit", product);
             }
         }
 

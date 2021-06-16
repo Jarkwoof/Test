@@ -68,7 +68,7 @@ namespace ShoppingCartCorePractice.Controllers
             }
             else
             {
-                return View("Update", categories);
+                return View("Edir", categories);
             }
         }
 
