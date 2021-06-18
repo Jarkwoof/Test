@@ -52,6 +52,7 @@ namespace ShoppingCartCorePractice.Areas.Admin.Controllers
                 var name = Path.Combine(_he.WebRootPath + "/Images", Path.GetFileName(PhotoUrl.FileName));
                 PhotoUrl.CopyToAsync(new FileStream(name, FileMode.Create));
                 Products.PhotoUrl = "Images/" + PhotoUrl.FileName;
+               
             }
             else
             {
@@ -80,8 +81,14 @@ namespace ShoppingCartCorePractice.Areas.Admin.Controllers
             return View(EditData);
         }
 
-        public ActionResult Update(Products product)
+        public ActionResult Update(Products product, IFormFile PhotoUrl)
         {
+            if(PhotoUrl != null)
+            {
+                var name = Path.Combine(_he.WebRootPath + "/Images", Path.GetFileName(PhotoUrl.FileName));
+                PhotoUrl.CopyToAsync(new FileStream(name, FileMode.Create));
+                product.PhotoUrl = "Images/" + PhotoUrl.FileName;
+            }
             var result = _Productsvc.Update(product);
             if (result == true)
             {              
