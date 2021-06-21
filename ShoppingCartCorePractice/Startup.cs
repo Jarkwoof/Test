@@ -35,6 +35,17 @@ namespace ShoppingCartCorePractice
             services.AddMvc(option => option.EnableEndpointRouting = false);       
             services.AddTransient<IAdminService<Categories>, CategoriesService>();
             services.AddTransient<IproductService, ProductService>();
+            services.AddCors(options =>
+            {
+                // CorsPolicy 是自訂的 Policy 名稱
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.WithOrigins("http://localhost:8080")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,13 +67,13 @@ namespace ShoppingCartCorePractice
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{area=Admin}/{controller=Product}/{action=Index}/{id?}"
+                    pattern: "{area=Customers}/{controller=ShoppingProductApi}/{action=Index}/{id?}"
                 );
             });
             //app.UseMvc(routes =>
