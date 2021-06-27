@@ -36,6 +36,7 @@ namespace ShoppingCartCorePractice.Areas.Customers
             }
             //var shopCart = HttpContext.Session.Get<List<Products>>("products");
            var shopCart= SessionHelper.Get<Cart>(HttpContext.Session, "cart");
+           SessionHelper.Set<Cart>(HttpContext.Session, "cart", shopCart);
             Console.WriteLine(shopCart);
             return Ok();
         }
