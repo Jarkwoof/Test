@@ -36,15 +36,16 @@
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="cart">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    {{items.length}}
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="cart">                  
+                        <partial name="_CartPartial.cshtml"/>
+                        @*<ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link text-dark">
+                    <i class="fas fa-shopping-cart"></i>
+                    {{items.length}}
+                </a>
+            </li>
+        </ul>*@
                     </div>
                 </div>
             </nav>
@@ -64,8 +65,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script type="text/javascript">
-        Vue.createApp({
+<script type="text/javascript">
+    Vue.createApp({
             data() {
                 return {
                     items: [],
@@ -74,26 +75,39 @@
                 }
             },
             mounted() {
-                axios
-                    .get('https://localhost:44379/Customers/ShoppingProductApi/Index')
-                    .then((response => { (this.Productlist = response.data);}))
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-
-                axios
-                    .get('https://localhost:44379/Customers/ShoppingProductApi/test')
-                    .then((response => { (this.message = response.data); console.log(this.message)}))
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                //axios
+                //    .get('https://localhost:44379/Customers/Home/Index')
+                //    .then((response => { (this.Productlist = response.data); console.log(this.Productlist) }))
+                //    .catch(function (error) {
+                //        console.log(error);
+                //    });
             },
             methods: {
-                AddToCart(itemToAdd) {                   
-                    this.items.push(itemToAdd)
+                AddToCart(Id) {
+                    @*let param = new URLSearchParams()
+                    param.append('Id', Id)           
+                    axios({
+                        method: 'post',
+                        url: '@Url.Action("AddToCart","Home")',
+                        data: param                      
+                    }).then(res => {
+                        this.items.push(itemid)
+                    }).catch(error => {
+                        console.info(error);
+                    });*@
+                    this.items.push(Id)
                 }
             },
         }).mount('#app')
-    </script>
+        @*function AddToCart(Id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AddToCart","Home")',
+                data: { Id: Id }
+            }).done(function (msg) {
+                $("li#Cart").html(msg);
+            });
+        }*@
+</script>
 </body>
 </html>

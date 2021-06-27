@@ -74,12 +74,13 @@ namespace ShoppingCartCorePractice
 
             app.UseAuthorization();
             app.UseCors("CorsPolicy");
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{area=Customers}/{controller=ShoppingProductApi}/{action=Index}/{id?}"
+                    pattern: "{area=Customers}/{controller=Home}/{action=Index}/{id?}"
                 );
             });
             //app.UseMvc(routes =>

@@ -26,21 +26,16 @@ namespace ShoppingCartCorePractice.Areas.Customers.Controllers
 
             return Ok(query);
         }
-        public IActionResult test()
+        public ActionResult AddToCart(int? id)
         {
-            var query = "x";
+            List<Products> products = new List<Products>();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var shopCart = HttpContext.Session.Get<List<Products>>("products");
 
-            return Ok(query);
+            return Ok();
         }
-        //public ActionResult AddToCart(int? id)
-        //{
-        //    List<Products> products = new List<Products>();
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    products = HttpContext.Session.Get<List<Products>>("products");
-
-        //}
     }
 }

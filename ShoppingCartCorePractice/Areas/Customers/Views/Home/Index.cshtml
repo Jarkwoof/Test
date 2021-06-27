@@ -15,7 +15,7 @@
     </style>*@
 
 <div class="row">
-    @*@if (Model.Count() > 0)
+    @if (Model.Count() > 0)
         {
             foreach (var item in Model)
             {
@@ -25,22 +25,22 @@
                         <div class="card-block">
                             <h4 class="card-title">@item.Name</h4>
                             <p class="card-text">@item.Price</p>
-                            <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">Add to cart</a>
+                            <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary" v-on:click="AddToCart(@item.Id)">Add to cart</a>
                         </div>
                     </div>
                 </div>
             }
-        }*@
-    <div class="col" v-for="(item , index) in Productlist" :key="item.id">
+        }
+    @*<div class="col" v-for="(item , index) in Productlist" :key="item.id">
         <div class="card" style="width: 20rem;">
             <img class="card-img-top" :src="item.photoUrl">
             <div class="card-block">
                 <h4 class="card-title">{{item.name}}</h4>
                 <p class="card-text">{{item.price}}</p>
-                <a href="#" :id="item.id" data-price="0.5" class="add-to-cart btn btn-primary" v-on:click="AddToCart(item)">Add to cart</a>
+                <a href="#" :id="item.id" data-price="0.5" class="add-to-cart btn btn-primary" v-on:click="AddToCart(item.id)">Add to cart</a>
             </div>
         </div>
-    </div>
+    </div>*@
 </div>
 
 <script>
