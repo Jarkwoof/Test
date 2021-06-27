@@ -10,7 +10,6 @@ namespace ShoppingCartCorePractice.Areas.Admin.Models
     public class ProductViewModel
     {
         public List<ProductDto> ProductList { get; set; }
-
         public ProductViewModel()
         {
             ProductList = new List<ProductDto>();

@@ -27,7 +27,6 @@ namespace ShoppingCartCorePractice.Migrations
         public string Publisher { get; set; }
         public System.DateTime PublishDT { get; set; }
         public bool IsPublic { get; set; }
-
         public virtual Categories Categories { get; set; }
         public virtual ICollection<OrderDetails> OrderDetails { get; set; }
     }
